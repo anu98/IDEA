@@ -91,6 +91,8 @@ namespace AugmeNDT
 
             sceneUIHandler.Create4DVis();
 
+
+
             Debug.Log("Finished loading " + filePaths.Count + " Files");
         }
 
