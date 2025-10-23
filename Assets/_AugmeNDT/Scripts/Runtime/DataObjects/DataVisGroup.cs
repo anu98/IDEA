@@ -54,7 +54,7 @@ namespace AugmeNDT
 
         // Representation for Abstract Dataset from csv files and derived from csv files of polygonal data 
         [SerializeField]
-        private List<Vis> visualizations;
+        public List<Vis> visualizations;
 
         #endregion
 

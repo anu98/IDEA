@@ -18,6 +18,7 @@ namespace AugmeNDT{
     {
         // Used to load data in various file formats
         private FileLoadingManager fileLoadingManager;
+        [SerializeField] private AttributePopulator attributePopulator;//ANU
 
         // Parent Container which stores all DataVisGroups in the scene
         [SerializeField]
@@ -60,7 +61,22 @@ namespace AugmeNDT{
             }
 
         }
+        public List<string> GetAttributeNamesOfLastLoadedCsv()
+        {
+            if (fileLoadingManager == null)
+            {
+                Debug.LogError("FileLoadingManager not assigned or initialized!");
+                return null;
+            }
 
+            CsvLoader csvLoader = fileLoadingManager.GetCsvLoader();
+            if (csvLoader != null)
+            {
+               return csvLoader.GetAllAttributeNames();
+            }
+
+            return null; // Not a CSV dataset loaded
+        }
         /// <summary>
         /// Returns the amount of loaded dataVisGroups
         /// </summary>
@@ -117,7 +133,7 @@ namespace AugmeNDT{
         /// Loads a file based on a predefined path and renders all possible representations
         /// </summary>
         /// <returns></returns>
-        public async Task<string> LoadPreSelectedObject(string filePath)
+        public async Task<DataVisGroup> LoadPreSelectedObject(string filePath)
         {
             fileLoadingManager.SetFilePath(filePath);
             bool loadingSucceded = await fileLoadingManager.LoadDataset();
@@ -128,9 +144,10 @@ namespace AugmeNDT{
                 Debug.LogError("Loading aborted!");
                 return null;
             }
+           
 
             Debug.Log("> Adding DataVis Group");
-
+           
             // Add Group
             dataVisGroups.Add(fileLoadingManager.GetDataVisGroup());
             int lastIndex = dataVisGroups.Count - 1;
@@ -144,8 +161,14 @@ namespace AugmeNDT{
             // Add Group to sceneObjectsContainer container
             dataVisGroups[lastIndex].GetGroupContainer().transform.parent = sceneObjectsContainer.transform;
             ArrangeGroupsSpatially();
+            //anu
+            //CsvLoader loader = fileLoadingManager.GetCsvLoader();
+            //if (loader != null && attributePopulator != null)
+            //{
+            //    attributePopulator.Initialize(loader);
+            //}
 
-            return filePath;
+            return dataVisGroups[lastIndex];
         }
 
         /// <summary>

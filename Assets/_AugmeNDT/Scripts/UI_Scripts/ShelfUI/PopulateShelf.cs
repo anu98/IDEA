@@ -14,17 +14,38 @@ namespace AugmeNDT
         private GameObject bookPrefab; // The book prefab to instantiate
 
         [SerializeField]
-        private Transform[] slots; // Array to hold slot transforms
+        private Transform[] slots;// Array to hold slot transforms
 
-        public string folderPath= "D:/downloads/Main"; // Path to the folder containing subfolders
+#if UNITY_EDITOR
+        public string editorFolderPath = "D:/downloads/Main"; // Editor path
+#else
+        public string androidFolderPath => Path.Combine(Application.persistentDataPath, "Datasets"); // Android path
+#endif
 
         void Start()
         {
-            PopulateShelf();
-            Debug.Log("Hi start is being callec");
+            string pathToUse = GetFolderPath();
+
+            if (!Directory.Exists(pathToUse))
+            {
+                Debug.LogError("Dataset folder not found: " + pathToUse);
+                return;
+            }
+
+            Debug.Log("Using dataset path: " + pathToUse);
+            PopulateShelf(pathToUse);
         }
 
-        void PopulateShelf()
+        string GetFolderPath()
+        {
+#if UNITY_EDITOR
+            return editorFolderPath;
+#else
+            return androidFolderPath;
+#endif
+        }
+
+        void PopulateShelf(string folderPath)
         {
             if (!Directory.Exists(folderPath))
             {

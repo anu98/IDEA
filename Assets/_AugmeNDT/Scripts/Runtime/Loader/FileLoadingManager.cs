@@ -1,10 +1,12 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Android;
+using UnityEngine.UIElements;
 
 #if !UNITY_EDITOR && UNITY_ANDROID
 using SimpleFileBrowser;
@@ -45,8 +47,11 @@ namespace AugmeNDT
         #region Getter/Setter
         public FileLoader LoaderFactory { get => loaderFactory; set => loaderFactory = value; }
         #endregion
-
-
+      
+        public CsvLoader GetCsvLoader()
+        {
+            return loaderFactory as CsvLoader;
+        }
         public async Task<bool> LoadDataset()
         {
             try
@@ -298,47 +303,56 @@ namespace AugmeNDT
         private async Task<String> FilePicker_Android()
         {
             RequestStoragePermission();
-
-            // Set Storage Permission in Magic Leap Settings (on device) then use the following path works
-            //filePath = "/storage/emulated/0/Datasets/10min_01.csv";
-            //return filePath;
-            
-            filePath = await ShowFileBrowser();
-            Debug.Log("ANDROID Picker Path = " + filePath);
-
-            return filePath;
+             Debug.Log("Skipping file picker, starting shelf UI directly.");
+            return ""; 
         }
 
         public async Task<String> ShowFileBrowser()
         {
-            var tcs = new TaskCompletionSource<string>();
+            //var tcs = new TaskCompletionSource<string>();
 
-            // Get SimpleFileBrowserVRCanvas GamObject
-            FileBrowser.CustomPrefabName = "Prefabs/UIPrefabs/SimpleFileBrowserVRCanvas";
+            //// Get SimpleFileBrowserVRCanvas GamObject
+            //FileBrowser.CustomPrefabName = "Prefabs/UIPrefabs/SimpleFileBrowserVRCanvas";
 
-            FileBrowser.SetFilters(true, new FileBrowser.Filter("Volumes", ".mhd", ".raw"), new FileBrowser.Filter("Datasets", ".csv"));
+            //FileBrowser.SetFilters(true, new FileBrowser.Filter("Volumes", ".mhd", ".raw"), new FileBrowser.Filter("Datasets", ".csv"));
             //FileBrowser.SetDefaultFilter(".jpg");
-            FileBrowser.AddQuickLink("Datasets", "/storage/emulated/0/Datasets/", null);
-            // Show the file
-            string initialPath = "/storage/emulated/0/Datasets/";
-            FileBrowser.ShowLoadDialog((paths) =>
+            //FileBrowser.AddQuickLink("Datasets", "/storage/emulated/0/Datasets/", null);
+            ////Show the file
+            //string initialPath = "/storage/emulated/0/Datasets/";
+            //FileBrowser.ShowLoadDialog((paths) =>
+            //    {
+            //        if (paths.Length > 0)
+            //        {
+            //            string selectedFile = paths[0]; // Takes the first selected file
+
+            //            UnityEngine.Debug.Log("Selected file: " + selectedFile);
+            //            filePath = selectedFile;
+            //            tcs.SetResult(filePath);
+            //        }
+            //    },
+            //    () => {
+            //        UnityEngine.Debug.Log("File selection cancelled");
+            //        tcs.SetResult("");
+            //    },  // Canceled
+            //    FileBrowser.PickMode.Files, false, initialPath, null, "Select a file", "Load");
+
+            //return await tcs.Task;
+            #if UNITY_EDITOR || UNITY_STANDALONE_WIN
+                var tcs = new TaskCompletionSource<string>();
+
+                // Editor/Windows file picker logic
+                string path = EditorUtility.OpenFilePanel("Open File...", "", "");
+                if (path.Length != 0)
                 {
-                    if (paths.Length > 0)
-                    {
-                        string selectedFile = paths[0]; // Takes the first selected file
+                    filePath = path;
+                }
 
-                        UnityEngine.Debug.Log("Selected file: " + selectedFile);
-                        filePath = selectedFile;
-                        tcs.SetResult(filePath);
-                    }
-                },
-                () => {
-                    UnityEngine.Debug.Log("File selection cancelled");
-                    tcs.SetResult("");
-                },  // Canceled
-                FileBrowser.PickMode.Files, false, initialPath, null, "Select a file", "Load");
-
-            return await tcs.Task;
+                Debug.Log("WIN Picker Path = " + filePath);
+                return filePath;
+            #else
+                Debug.Log("Skipping file picker on Magic Leap / Android. Using shelf UI instead.");
+                return ""; // or you can return folderPathFromShelf if needed
+            #endif
         }
 
 #endif

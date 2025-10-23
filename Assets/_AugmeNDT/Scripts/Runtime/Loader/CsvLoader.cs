@@ -10,7 +10,8 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace AugmeNDT{
+namespace AugmeNDT
+{
     public class CsvLoader : FileLoader
     {
         private CsvFileType csvFile;
@@ -21,24 +22,17 @@ namespace AugmeNDT{
         private int skipRows = IAbstractData.SkipRows;
         private bool hasSpatialValues = false;
 
-        private bool automaticDetectionSuccesful = false; // File type could be detected automatically
+        private bool automaticDetectionSuccesful = false;
+        private Dictionary<string, List<string>> attributes = new Dictionary<string, List<string>>();
 
         public CsvLoader()
         {
-            //Has to happen on main thread
             polyFiberDataset = ScriptableObject.CreateInstance<PolyFiberData>();
         }
 
-        /// <summary>
-        /// Constructor with rows to skip at the beginning of the file
-        /// </summary>
-        /// <param name="hasSpatialValues"></param>
-        /// <param name="skipRows"></param>
         public CsvLoader(bool hasSpatialValues, int skipRows)
         {
-            //Has to happen on main thread
             polyFiberDataset = ScriptableObject.CreateInstance<PolyFiberData>();
-
             this.skipRows = skipRows;
             this.hasSpatialValues = hasSpatialValues;
         }
@@ -64,8 +58,6 @@ namespace AugmeNDT{
                 abstractDataset = csvFile.GetDataSet();
                 abstractDataset.SetDatasetName(fileName);
             }
-        
-
         }
 
         private async Task ReadCsv(string filePath)
@@ -74,64 +66,61 @@ namespace AugmeNDT{
             using var reader = await streamReaderTask;
             encoding = reader.CurrentEncoding;
 
-            //Get Meta Infos in first line
+            // Get Meta Infos in first line
             string metaLine = await reader.ReadLineAsync();
             string[] metaInfo = metaLine.Split(splitChar, StringSplitOptions.RemoveEmptyEntries);
             ProcessMetaInfos(metaInfo);
-            //TODO: If no meta info is provided then header might be alredy read!! No additonal ReadLineAsync needed and skipRow could be -1!
 
             csvValues = new List<List<string>>();
+            attributes.Clear(); // reset
 
             for (int skip = 0; skip < skipRows; skip++)
             {
                 await reader.ReadLineAsync();
             }
 
+            // Read header
             string headerLine = await reader.ReadLineAsync();
             string[] headerNames = headerLine.Split(splitChar, StringSplitOptions.RemoveEmptyEntries);
-
 
             if (headerNames == null || headerNames.Length < 1)
             {
                 Debug.LogError("CSV File Header row is empty");
+                return;
             }
 
-            // Get header names from first row
+            // Populate csvValues and attributes dictionary
             foreach (var name in headerNames)
             {
-                var trimmedName = name.Trim(' '); //Remove leading and trailing spaces
+                var trimmedName = name.Trim();
                 csvValues.Add(new List<string> { trimmedName });
+                if (!attributes.ContainsKey(trimmedName))
+                {
+                    attributes.Add(trimmedName, new List<string>());
+                }
             }
 
-
-            // Get next rows and assign value to specific column (header)
+            // Read remaining rows
             while (!reader.EndOfStream)
             {
                 string line = await reader.ReadLineAsync();
                 string[] values = line.Split(splitChar, StringSplitOptions.RemoveEmptyEntries);
 
-                if (values == null || values.Length < 1)
-                {
-                    Debug.LogError("CSV File has no value row");
-                }
+                if (values == null || values.Length < 1) continue;
 
                 for (int feature = 0; feature < csvValues.Count; feature++)
                 {
-                    csvValues[feature].Add(values[feature]);
+                    string val = feature < values.Length ? values[feature] : "";
+                    csvValues[feature].Add(val);
+                    attributes[csvValues[feature][0]].Add(val); // fill dictionary
                 }
-
             }
 
-            Debug.Log("CSV File loaded");
-            
+            Debug.Log("CSV File loaded with attributes: " + string.Join(", ", attributes.Keys));
+
             csvFile = new CsvFileType(csvValues);
-            //PrintCsv();
         }
 
-        /// <summary>
-        /// Checks if the file has abstract or spatial values and sets how many rows to skip
-        /// </summary>
-        /// <param name="metaInfo"></param>
         private void ProcessMetaInfos(string[] metaInfo)
         {
             if (metaInfo.Length < 1)
@@ -151,37 +140,37 @@ namespace AugmeNDT{
                     automaticDetectionSuccesful = true;
                     hasSpatialValues = true;
                     skipRows = ISpatialData.SkipRows;
-                    //TODO: Check Type of spatial data
-                    Debug.Log("Spatial Dataset ["+ metaInfo[1] + "] detected");
+                    Debug.Log("Spatial Dataset [" + metaInfo[1] + "] detected");
                     break;
                 default:
                     automaticDetectionSuccesful = false;
-                    Debug.LogError("CSV File has no valid meta information. Use abstract dataset as default");
+                    Debug.LogError("CSV File has no valid meta information. Using abstract dataset as default");
                     break;
             }
         }
 
-        /// <summary>
-        /// Prints the csv with the header as as first row
-        /// </summary>
         public void PrintCsv()
         {
-            string csvOutput = "";
+            StringBuilder csvOutput = new StringBuilder();
 
             for (int rowIndex = 0; rowIndex < csvValues[0].Count; rowIndex++)
             {
-                csvOutput += "| ";
-
-                for (int columnsIndex = 0; columnsIndex < csvValues.Count; columnsIndex++)
+                csvOutput.Append("| ");
+                for (int colIndex = 0; colIndex < csvValues.Count; colIndex++)
                 {
-                    csvOutput += csvValues[columnsIndex][rowIndex] + "\t | ";
+                    csvOutput.Append(csvValues[colIndex][rowIndex] + "\t | ");
                 }
-
-                csvOutput += " \n";
+                csvOutput.Append(" \n");
             }
 
             Debug.Log("CSV Output [" + encoding + "]: \n" + csvOutput);
         }
 
+        public List<string> GetAllAttributeNames()
+        {
+            return attributes != null && attributes.Count > 0
+                ? new List<string>(attributes.Keys)
+                : new List<string>();
+        }
     }
 }

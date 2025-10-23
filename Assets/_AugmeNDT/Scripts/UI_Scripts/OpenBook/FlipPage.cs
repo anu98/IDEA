@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;       
+using UnityEngine.UI;
 using System;
 using Unity.VisualScripting;
 
@@ -17,7 +17,7 @@ namespace AugmeNDT
             pagePopulator = populator;
         }
 
-        private enum ButtonType
+        public enum ButtonType
         {
             forwardBtn1,
             forwardBtn,
@@ -74,11 +74,11 @@ namespace AugmeNDT
 
             if (ForwardButton != null)
             {
-                ForwardButton.onClick.AddListener(() => turnOnePage_Click(ButtonType.forwardBtn));
+                ForwardButton.onClick.AddListener(() => TurnOnePage_Click(ButtonType.forwardBtn));
             }
             if (ForwardButton1 != null)
             {
-                ForwardButton1.onClick.AddListener(() => turnOnePage_Click(ButtonType.forwardBtn));
+                ForwardButton1.onClick.AddListener(() => TurnOnePage_Click(ButtonType.forwardBtn));
             }
             else
             {
@@ -86,7 +86,7 @@ namespace AugmeNDT
             }
             if (PrevButton != null)
             {
-                PrevButton.onClick.AddListener(() => turnOnePage_Click(ButtonType.prevBtn));
+                PrevButton.onClick.AddListener(() => TurnOnePage_Click(ButtonType.prevBtn));
             }
 
             //if (CloseButton != null)
@@ -114,7 +114,7 @@ namespace AugmeNDT
                 }
             }
         }
-        private void turnOnePage_Click(ButtonType type)
+        public void TurnOnePage_Click(ButtonType type)
         {
 
             //if(currentPageIndex <= -1)
@@ -130,7 +130,7 @@ namespace AugmeNDT
             {
                 currentPageIndex--;
             }
-           
+
 
             isClicked = true;
             startTime = DateTime.Now;
@@ -144,7 +144,7 @@ namespace AugmeNDT
             }
             else if (type == ButtonType.prevBtn)
             {
-               
+
                 rotationVector = new Vector3(0, -180, 0);
 
             }
@@ -154,7 +154,7 @@ namespace AugmeNDT
 
         public void ShowCurrentPage()
         {
-            
+
             Debug.Log($"Current Page Index: {currentPageIndex}");
             //Hide all pages
             foreach (var page in pages)
@@ -165,7 +165,7 @@ namespace AugmeNDT
             // Hide the index page
             indexPage.SetActive(false);
 
-           
+
             if (currentPageIndex == -1)
             {
                 indexPage.SetActive(true);
@@ -178,9 +178,9 @@ namespace AugmeNDT
                 pages[currentPageIndex].SetActive(true);
                 var OpenButton = pages[currentPageIndex].transform.Find("Canvas/PreviewsOpenButton").gameObject;
                 OpenButton.SetActive(true);
-               // PreviewsOpenButton.SetActive(true);
-                PagePopulator pagePopulator = GetComponent<PagePopulator>(); 
-                if(pagePopulator== null)
+                // PreviewsOpenButton.SetActive(true);
+                PagePopulator pagePopulator = GetComponent<PagePopulator>();
+                if (pagePopulator == null)
                 {
                     Debug.Log("null");
                 }
@@ -209,7 +209,7 @@ namespace AugmeNDT
         }
         private void PlaySound()
         {
-            if((audioSource != null) && flipPage != null)
+            if ((audioSource != null) && flipPage != null)
             {
                 audioSource.PlayOneShot(flipPage);
 
@@ -226,6 +226,19 @@ namespace AugmeNDT
             folderpath = path;
             Debug.Log($"Setfolderpath called in flippage {folderpath}");
         }
+        public void TurnNextPage()
+        {
+            Debug.Log("turnnextpage method called");
+            TurnOnePage_Click(ButtonType.forwardBtn);
+        }
+
+        public void TurnPreviousPage()
+        {
+            Debug.Log("turnprevpage method called");
+
+            TurnOnePage_Click(ButtonType.prevBtn);
+        }
+
 
     }
 

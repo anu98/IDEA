@@ -20,6 +20,7 @@ namespace AugmeNDT
         [SerializeField] GameObject BookSpine;
         [SerializeField] GameObject ClosedBook;
 
+
         private bool isCloseClicked;
         private Vector3 rotationVector;
         private bool isOpenClicked;
@@ -72,6 +73,11 @@ namespace AugmeNDT
         public void openBtn_Click()
         {
             isOpenClicked = true;
+            
+            gameObject.SetActive(false);
+            insideBackCover.SetActive(false);
+            openedBook.SetActive(true);
+            BookSpine.SetActive(false);
             startTime = DateTime.Now;
             rotationVector = new Vector3(0, 180, 0);
             PlaySound();
@@ -86,7 +92,7 @@ namespace AugmeNDT
 
             isCloseClicked = true;
             startTime = DateTime.Now;
-            rotationVector = new Vector3(0, -180, 0); // Rotate backward to close
+            rotationVector = new Vector3(0, -175, 0); // Rotate backward to close
             PlaySound();
 
             ClosedBook.SetActive(true);         // Show the closed book temporarily
