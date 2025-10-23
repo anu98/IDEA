@@ -92,7 +92,7 @@ namespace AugmeNDT
 
             isCloseClicked = true;
             startTime = DateTime.Now;
-            rotationVector = new Vector3(0, -175, 0); // Rotate backward to close
+            rotationVector = new Vector3(0, -360, 0); // Rotate backward to close
             PlaySound();
 
             ClosedBook.SetActive(true);         // Show the closed book temporarily
