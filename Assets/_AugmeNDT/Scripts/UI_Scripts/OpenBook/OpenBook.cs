@@ -11,7 +11,7 @@ namespace AugmeNDT
     {
         [SerializeField] Button openBtn;
         [SerializeField] Button closebtn;
-
+        [SerializeField] GameObject UserInterface;
         [SerializeField] AudioSource audioSource;
         [SerializeField] AudioClip openBook;
 
@@ -91,14 +91,15 @@ namespace AugmeNDT
 
 
             isCloseClicked = true;
-            startTime = DateTime.Now;
-            rotationVector = new Vector3(0, -360, 0); // Rotate backward to close
-            PlaySound();
+            //startTime = DateTime.Now;
+            //rotationVector = new Vector3(0, -360, 0); // Rotate backward to close
+            //PlaySound();
+            UserInterface.SetActive(true);
 
-            ClosedBook.SetActive(true);         // Show the closed book temporarily
+            //ClosedBook.SetActive(true);         // Show the closed book temporarily
             openedBook.SetActive(false);        // Hide the open book during animation
-            insideBackCover.SetActive(true);    // Show the inside back cover
-            BookSpine.SetActive(true);
+            //insideBackCover.SetActive(true);    // Show the inside back cover
+            //BookSpine.SetActive(true);
 
         }
         private void PlaySound()

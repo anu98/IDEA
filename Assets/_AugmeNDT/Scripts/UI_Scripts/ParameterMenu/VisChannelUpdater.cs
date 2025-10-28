@@ -111,7 +111,7 @@ public class VisChannelUpdater : MonoBehaviour
         currentGroup.RenderAbstractVisObject(visType, channels);
 
         // Optional: arrange objects in space
-        currentGroup.ArrangeObjectsSpatially();
+         currentGroup.ArrangeObjectsSpatially();
 
         Debug.Log("Visualization updated with new parameters");
     }
@@ -148,6 +148,9 @@ public class VisChannelUpdater : MonoBehaviour
         // Optional: re-arrange in space if needed
         group.ArrangeObjectsSpatially();
     }
+   
+    
+
     public void SetCurrentGroup(DataVisGroup group)
     {
         currentGroup = group;
