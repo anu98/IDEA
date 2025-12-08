@@ -15,7 +15,7 @@ namespace AugmeNDT{
     /// Class handles the loaded datasets and their respective renderings and data visualizations
     /// </summary>
     public class SceneObjectHandler : MonoBehaviour
-    {
+    {   
         // Used to load data in various file formats
         private FileLoadingManager fileLoadingManager;
         [SerializeField] private AttributePopulator attributePopulator;//ANU
@@ -29,7 +29,7 @@ namespace AugmeNDT{
         // Stores all loaded data & its derived representations
         [SerializeField]
         private List<DataVisGroup> dataVisGroups;
-
+        Color[] colorScheme;
         // Combines stored groups for combined representations
         [SerializeField]
         private Dictionary<int, DataVisGroup> multiGroups;
@@ -133,6 +133,7 @@ namespace AugmeNDT{
         /// Loads a file based on a predefined path and renders all possible representations
         /// </summary>
         /// <returns></returns>
+        /// //ANU
         public async Task<DataVisGroup> LoadPreSelectedObject(string filePath)
         {
             fileLoadingManager.SetFilePath(filePath);
@@ -170,7 +171,33 @@ namespace AugmeNDT{
 
             return dataVisGroups[lastIndex];
         }
+      
+         public async Task<DataVisGroup> LoadPreview(string filePath)
+         {
+                fileLoadingManager.SetFilePath(filePath);
+                bool loadingSucceded = await fileLoadingManager.LoadDataset();
 
+                if (!loadingSucceded)
+                {
+                    Debug.LogError("Preview loading aborted!");
+                    return null;
+                }
+
+                // Add Group
+                DataVisGroup newGroup = fileLoadingManager.GetDataVisGroup();
+                dataVisGroups.Add(newGroup);
+
+                // Render only the fibers for preview
+                newGroup.RenderFibersforPreview(VisType.MDDGlyphs);
+
+                // Deactivate the preview object so it’s hidden at runtime
+                if (newGroup.GetGroupContainer() != null)
+                    newGroup.GetGroupContainer().SetActive(true);
+
+                return newGroup;
+         }
+
+        
         /// <summary>
         /// Method iterates through all selected groups and adds them to the multiGroups dictionary (if found in the dataVisGroups list).
         /// </summary>
@@ -303,6 +330,9 @@ namespace AugmeNDT{
             //TODO: Change int selectedVis to reference of Object during interaction
             dataVisGroups[selectedGroup].ChangeAxis(selectedVis, axisID, selectedDimension, numberOfTicks);
         }
+
+        //ANU
+        
 
     }
 

@@ -6,7 +6,10 @@ namespace AugmeNDT
 {
     public class PageData : MonoBehaviour
     {
-        string PageFilePath; // Store the file path of each dataset
+        string PageFilePath;
+        [SerializeField] private Transform previewAnchor;
+        public DataVisGroup CachedGroup { get; set; }
+        public GameObject PreviewObject { get; set; }// empty child on page for 3D preview// Store the file path of each dataset
         //void Start()
         //{
         //    Debug.Log($"Start() called on {gameObject.name}, filePath = '{filePath}'");
@@ -42,6 +45,10 @@ namespace AugmeNDT
                 Debug.LogError($"GetFilePath() is returning an EMPTY value on {gameObject.name}");
             }
             return PageFilePath;
+        }
+        public Transform GetPreviewAnchor()
+        {
+            return previewAnchor != null ? previewAnchor : transform;
         }
     }
 }

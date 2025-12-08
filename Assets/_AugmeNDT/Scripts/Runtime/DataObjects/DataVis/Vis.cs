@@ -68,11 +68,25 @@ namespace AugmeNDT
         public float height = 0.25f;                                    // Vis container height in centimeters.
         public float depth = 0.25f;                                     // Vis container depth in centimeters.
         public float[] xyzOffset = new[]{0.1f, 0.1f, 0.1f};             // Offset from origin (0,0) and End (1,0) for the Axes (x,y,z).
-        public int[] xyzTicks = { 11, 11, 11 };                         // Amount of Ticks between min/max tick for Axes (x,y,z).
-        public Color[] colorScheme = { Color.cyan, Color.white, Color.magenta };     // Defines Color Scheme for Color Channel
+        public int[] xyzTicks = { 11, 11, 11 }; // Amount of Ticks between min/max tick for Axes (x,y,z).
+        public Color[] colorScheme; // currently active color scheme
+                                   
+        public Color[] colorScheme_default = { Color.cyan, Color.white, Color.magenta };
+        // Warm theme
+        public Color[] colorScheme_warm = { Color.red, Color.yellow, Color.orange };
 
+        // Cool theme
+        public Color[] colorScheme_cool = { Color.blue, Color.cyan, Color.white };
+
+        // Purple theme
+        public Color[] colorScheme_purple = { new Color(0.6f, 0.4f, 0.8f), new Color(0.8f, 0.6f, 0.9f), new Color(0.4f, 0.2f, 0.6f) };
+
+        // Green theme
+        public Color[] colorScheme_green = { Color.green, new Color(0.5f, 0.8f, 0.5f), new Color(0.2f, 0.5f, 0.2f) };
+        // Defines Color Scheme for Color Channel
         // Interactions
-        public VisInteractor visInteractor;                             // Interactor for the Vis    
+        public VisInteractor visInteractor;
+        // Interactor for the Vis    
         private DataVisGroup dataVisGroup;                              // Reference to DataVisGroup
         public Dictionary<int, DataVisGroup> multiGroups;               // If 4D Stores the Group for each Dataset
 
@@ -94,6 +108,12 @@ namespace AugmeNDT
             DefineChannelToData(VisChannel.ZPos, 3);
             DefineChannelToData(VisChannel.Color, 3);
         }
+        public void SetColorScheme(Color[] newScheme)
+        {
+            colorScheme = newScheme;
+        }
+
+
 
         public virtual void DeleteVis()
         {
@@ -106,7 +126,8 @@ namespace AugmeNDT
             visContainer.SetTitle(title);
             visContainer.SetAxisOffsets(xyzOffset);
             visContainer.SetAxisTickNumber(xyzTicks);
-            visContainer.SetColorScheme(colorScheme);
+            visContainer.SetColorScheme(GlobalColor.CurrentScheme);
+
             visContainer.SetVisInteractor(visInteractor);
         }
 

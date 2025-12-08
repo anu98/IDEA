@@ -73,13 +73,13 @@ namespace AugmeNDT
         public void openBtn_Click()
         {
             isOpenClicked = true;
-            
+            rotationVector = new Vector3(0, 180, 0);
             gameObject.SetActive(false);
             insideBackCover.SetActive(false);
             openedBook.SetActive(true);
             BookSpine.SetActive(false);
             startTime = DateTime.Now;
-            rotationVector = new Vector3(0, 180, 0);
+           
             PlaySound();
 
         }
@@ -93,7 +93,7 @@ namespace AugmeNDT
             isCloseClicked = true;
             //startTime = DateTime.Now;
             //rotationVector = new Vector3(0, -360, 0); // Rotate backward to close
-            //PlaySound();
+            PlaySound();
             UserInterface.SetActive(true);
 
             //ClosedBook.SetActive(true);         // Show the closed book temporarily

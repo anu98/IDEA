@@ -11,7 +11,7 @@ public class VisChannelUpdater : MonoBehaviour
     public TMP_Dropdown yDropdown;
     public TMP_Dropdown zDropdown;
     public TMP_Dropdown colorDropdown;
-    public TMP_Dropdown sizeDropdown;
+ 
 
     [Header("Target Visualization")]
     public DataVisGroup currentGroup; // drag the DataVisGroup from scene
@@ -65,15 +65,14 @@ public class VisChannelUpdater : MonoBehaviour
                 channels[AugmeNDT.VisChannel.XPos] = GetAttributeFromDropdown(xDropdown);
                 channels[AugmeNDT.VisChannel.YPos] = GetAttributeFromDropdown(yDropdown);
                 channels[AugmeNDT.VisChannel.ZPos] = GetAttributeFromDropdown(zDropdown);
-                //channels[AugmeNDT.VisChannel.XSize] = GetAttributeFromDropdown(sizeDropdown);
-                //channels[AugmeNDT.VisChannel.Color] = GetAttributeFromDropdown(colorDropdown);
+           
                 break;
 
             case AugmeNDT.VisType.BarChart:
                 channels[AugmeNDT.VisChannel.XPos] = GetAttributeFromDropdown(xDropdown);
                 channels[AugmeNDT.VisChannel.YSize] = GetAttributeFromDropdown(yDropdown);
                 channels[AugmeNDT.VisChannel.ZPos] = GetAttributeFromDropdown(zDropdown);
-                //channels[AugmeNDT.VisChannel.Color] = GetAttributeFromDropdown(xDropdown);
+               
                 break;
 
             case AugmeNDT.VisType.Histogram:
@@ -86,14 +85,14 @@ public class VisChannelUpdater : MonoBehaviour
                 channels[AugmeNDT.VisChannel.XPos] = GetAttributeFromDropdown(xDropdown);
                 channels[AugmeNDT.VisChannel.YPos] = GetAttributeFromDropdown(yDropdown);
                 channels[AugmeNDT.VisChannel.ZPos] = GetAttributeFromDropdown(zDropdown);
-                channels[AugmeNDT.VisChannel.Color] = GetAttributeFromDropdown(xDropdown);
+                
                 break;
 
             case AugmeNDT.VisType.ChronoBins:
                 channels[AugmeNDT.VisChannel.XPos] = GetAttributeFromDropdown(xDropdown);
                 channels[AugmeNDT.VisChannel.YPos] = GetAttributeFromDropdown(yDropdown);
                 channels[AugmeNDT.VisChannel.ZPos] = GetAttributeFromDropdown(zDropdown);
-                channels[AugmeNDT.VisChannel.Color] = GetAttributeFromDropdown(xDropdown);
+               
                 break;
 
             default:
@@ -101,17 +100,19 @@ public class VisChannelUpdater : MonoBehaviour
                 channels[AugmeNDT.VisChannel.XPos] = GetAttributeFromDropdown(xDropdown);
                 channels[AugmeNDT.VisChannel.YPos] = GetAttributeFromDropdown(yDropdown);
                 channels[AugmeNDT.VisChannel.ZPos] = GetAttributeFromDropdown(zDropdown);
-                channels[AugmeNDT.VisChannel.XSize] = GetAttributeFromDropdown(xDropdown);
-                channels[AugmeNDT.VisChannel.Color] = GetAttributeFromDropdown(xDropdown);
+               
                 break;
         }
 
+
+        // Update global scheme to what UI selected
+        GlobalColor.CurrentScheme = GetSelectedScheme();
 
         // ---- Render new visualization ----
         currentGroup.RenderAbstractVisObject(visType, channels);
 
         // Optional: arrange objects in space
-         currentGroup.ArrangeObjectsSpatially();
+        currentGroup.ArrangeObjectsSpatially();
 
         Debug.Log("Visualization updated with new parameters");
     }
@@ -137,26 +138,40 @@ public class VisChannelUpdater : MonoBehaviour
 
         group.visualizations.Clear();
     }
-    public void RenderNewVisualization(DataVisGroup group, VisType visType, Dictionary<VisChannel, Attribute> selectedChannels)
-    {
-        // Clear old visualizations first
-        ClearVisualizations(group);
-
-        // Render the new visualization with selected channels
-        group.RenderAbstractVisObject(visType, selectedChannels);
-
-        // Optional: re-arrange in space if needed
-        group.ArrangeObjectsSpatially();
-    }
-   
-    
-
     public void SetCurrentGroup(DataVisGroup group)
     {
         currentGroup = group;
         Debug.Log("Current DataVisGroup set in VisChannelUpdater: " + group);
     }
-
-
+    private Color[] GetSelectedScheme()
+    {
+        switch (colorDropdown.value)
+        {
+            case 0: return ColorSchemes.Default;
+            case 1: return ColorSchemes.Warm;
+            case 2: return ColorSchemes.Cool;
+            case 3: return ColorSchemes.Purple;
+            case 4: return ColorSchemes.Green;
+            default: return ColorSchemes.Default;
+        }
+    }
+   
 }
+
+    
+    //public void RenderNewVisualization(DataVisGroup group, VisType visType, Dictionary<VisChannel, Attribute> selectedChannels)
+    //{
+    //    // Clear old visualizations first
+    //    ClearVisualizations(group);
+
+    //    // Render the new visualization with selected channels
+    //    group.RenderAbstractVisObject(visType, selectedChannels);
+
+    //    // Optional: re-arrange in space if needed
+    //    group.ArrangeObjectsSpatially();
+    //}
+
+
+   
+
 

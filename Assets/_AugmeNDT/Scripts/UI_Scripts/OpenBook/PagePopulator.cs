@@ -17,6 +17,8 @@ namespace AugmeNDT
         public Transform contentPanel; // Panel where the pages will be instantiated
         public string folderPath;
         private List<GameObject> pages = new List<GameObject>(); // List to store the created pages
+      
+
         void Start()
         {
             //PopulatePages(folderPath);
@@ -51,6 +53,7 @@ namespace AugmeNDT
               
                 pages.Add(page); // Add the page to the list
 
+                
 
                 if (page == null)
                 {
@@ -125,7 +128,12 @@ namespace AugmeNDT
                
             
 
-        }  
+        }
+       
+
+
+
+
     }
 }
 

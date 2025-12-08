@@ -39,6 +39,8 @@ namespace AugmeNDT
 
 
         #region REPRESENTATIONS
+        public bool HasPolygonalDataset => hasPolygonalDataset;
+        public bool HasAbstractDataset => hasAbstractDataset;
 
         // Parent Container which stores all representations of the group
         [SerializeField]
@@ -64,7 +66,16 @@ namespace AugmeNDT
         private bool hasPolygonalDataset = false;
         [SerializeField]
         private bool hasAbstractDataset = false;
+        public Vis GetActiveVis()
+        {
+            if (dataVisGroupContainer == null)
+            {
+                Debug.LogError("DataVisGroupContainer is null!");
+                return null;
+            }
 
+            return dataVisGroupContainer.GetComponentInChildren<Vis>();
+        }
         /// <summary>
         /// Generates a new DataVis group with continuous increasing ID
         /// </summary>
@@ -83,10 +94,12 @@ namespace AugmeNDT
         /// Returns unique identifier of the group
         /// </summary>
         /// <returns></returns>
+        /// 
         public int GetGroupID()
         {
             return ID;
         }
+        
 
         /// <summary>
         /// Returns the parent container of all group representations
@@ -262,7 +275,8 @@ namespace AugmeNDT
             {
                 vis.SetChannelEncoding(entry.Key, entry.Value);
             }
-            
+          
+
             vis.CreateVis(dataVisGroupContainer);
         }
 
@@ -275,6 +289,12 @@ namespace AugmeNDT
             if (hasVolumeDataset) RenderVolumeObject();
             if (hasPolygonalDataset) RenderPolyObject();
             if (hasAbstractDataset) RenderAbstractVisObject(visType);
+        }
+        public void RenderFibersforPreview(VisType visType)
+        {
+            //if (hasVolumeDataset) RenderVolumeObject();
+            if (hasPolygonalDataset) RenderPolyObject();
+            //if (hasAbstractDataset) RenderAbstractVisObject(visType);
         }
 
         #endregion
@@ -345,6 +365,7 @@ namespace AugmeNDT
         /// Aligns the grid positions of all visualizations to be furthest away from the viewer
         /// </summary>
         /// <param name="selectedVis"></param>
+        ///
         public void AlignGridPositions()
         {
             foreach (Vis vis in visualizations)
@@ -352,6 +373,8 @@ namespace AugmeNDT
                 vis.UpdateVis();
             }
         }
+      
+
 
     }
 

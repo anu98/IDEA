@@ -300,7 +300,7 @@ namespace AugmeNDT{
         /// <summary>
         /// Calculates the min and max values of the drawing properties (Position, Diameter)
         /// </summary>
-        private void CalculateMinMax()
+        public void CalculateMinMax()
         {
             // Calculate min/max values between realX1, realX2, realY1, realY2, realZ1, realZ2
             double maxX = Math.Max(realX1.Max(), realX2.Max());

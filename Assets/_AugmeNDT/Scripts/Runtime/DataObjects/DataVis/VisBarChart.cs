@@ -51,7 +51,7 @@ namespace AugmeNDT{
 
             LegendColorBar colorScalarBar = new LegendColorBar();
 
-            GameObject colorBar01 = colorScalarBar.CreateColorScalarBar(visContainerObject.transform.position, channelEncoding[VisChannel.Color].GetName(), channelEncoding[VisChannel.Color].GetMinMaxVal(), 1, colorScheme);
+            GameObject colorBar01 = colorScalarBar.CreateColorScalarBar(visContainerObject.transform.position, channelEncoding[VisChannel.Color].GetName(), channelEncoding[VisChannel.Color].GetMinMaxVal(), 1, colorScheme_default);
             //colorBar01.transform.parent = colorScalarBarContainer.transform;
             CreateColorLegend(colorBar01);
 
