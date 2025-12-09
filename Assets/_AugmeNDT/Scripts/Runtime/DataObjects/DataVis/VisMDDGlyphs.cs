@@ -296,8 +296,8 @@ namespace AugmeNDT{
             //## 08: Set up individual Interctions
             SetUpVisTransitionInteractor(visContainerObject);
             // NEW: ensure MDD glyph chart + all bars use Default layer
-            int defaultLayer = LayerMask.NameToLayer("Default");
-            SetLayerRecursively(visContainerObject, defaultLayer);
+            //int defaultLayer = LayerMask.NameToLayer("Default");
+            //SetLayerRecursively(visContainerObject, defaultLayer);
             return visContainerObject;
         }
 
