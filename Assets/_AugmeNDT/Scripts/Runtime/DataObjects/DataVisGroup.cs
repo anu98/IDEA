@@ -57,7 +57,7 @@ namespace AugmeNDT
         // Representation for Abstract Dataset from csv files and derived from csv files of polygonal data 
         [SerializeField]
         public List<Vis> visualizations;
-
+        public Vis lastAbstractVis;
         #endregion
 
         [SerializeField]
@@ -86,7 +86,15 @@ namespace AugmeNDT
             dataVisGroupContainer = new GameObject("DataVisGroup_" + ID);
             visualizations = new List<Vis>();
         }
-
+        public GameObject GetPolyFiberObject()
+        {
+            if (polyFiberRenObj == null)
+            {
+                Debug.LogError("polyFiberRenObj is null, call RenderPolyObject() first.");
+                return null;
+            }
+            return polyFiberRenObj.GetRootObject(); // or whatever method returns its GameObject
+        }
 
         #region Getter/Setter
 
@@ -244,10 +252,20 @@ namespace AugmeNDT
 
             Vis vis = Vis.GetSpecificVisType(visType);
             visualizations.Add(vis);
+            lastAbstractVis = vis;
 
             vis.AppendData(csvAbstractData);
             vis.SetDataVisGroup(this);
             vis.CreateVis(dataVisGroupContainer);
+        }
+        public GameObject GetLastAbstractVisObject()
+        {
+            if (lastAbstractVis == null || lastAbstractVis.visContainerObject == null)
+            {
+                Debug.LogError("No abstract vis created yet for this group.");
+                return null;
+            }
+            return lastAbstractVis.visContainerObject;
         }
 
         /// <summary>

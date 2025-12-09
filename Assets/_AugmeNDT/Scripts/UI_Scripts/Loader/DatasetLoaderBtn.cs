@@ -62,7 +62,13 @@ namespace AugmeNDT
             pageData.CachedGroup = visGroup;
 
             // Single call to unified preview factory
-            DatasetPreviewFactory.CreatePreview(pageData, visGroup);
+            //DatasetPreviewFactory.CreatePreview(pageData, visGroup);
+            // Now create a screenshot preview for this dataset
+            var screenshotHelper = FindFirstObjectByType<DatasetScreenshotHelper>();
+            if (screenshotHelper != null)
+            {
+                screenshotHelper.CapturePreview(visGroup, pageData, correctedPath);
+            }
             ParameterSelectionMenu.SetActive(true);
 
 

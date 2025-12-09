@@ -12,6 +12,10 @@ public class BookClickHandler : MonoBehaviour
     [SerializeField] GameObject UserInterface;
     [SerializeField] GameObject Book;
     [SerializeField] GameObject closedBook;
+    [SerializeField] GameObject insideBackCover;
+    [SerializeField] GameObject BookSpine;
+    [SerializeField] GameObject FrontofBook;
+
 
     private float interactionStartTime;
     private const float clickThreshold = 0.2f; 
@@ -44,9 +48,13 @@ public class BookClickHandler : MonoBehaviour
 
             Debug.Log("Book was clicked! Path: " + folderPath);
             UserInterface.SetActive(false);
-            Book.SetActive(true);
-            // Add logic to handle the book click event, such as opening the book or loading content
             closedBook.SetActive(true);
+            FrontofBook.SetActive(true);
+            insideBackCover.SetActive(true);
+            BookSpine.SetActive(true);
+                
+            // Add logic to handle the book click event, such as opening the book or loading content
+           
            // pagePopulator.PopulatePages(folderPath);
            if(flipPage == null)
             {

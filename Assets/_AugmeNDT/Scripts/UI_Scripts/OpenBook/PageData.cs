@@ -9,6 +9,8 @@ namespace AugmeNDT
         string PageFilePath;
         [SerializeField] private Transform previewAnchor;
         public DataVisGroup CachedGroup { get; set; }
+        public Texture2D PreviewTexture { get; set; }
+
         public GameObject PreviewObject { get; set; }// empty child on page for 3D preview// Store the file path of each dataset
         //void Start()
         //{

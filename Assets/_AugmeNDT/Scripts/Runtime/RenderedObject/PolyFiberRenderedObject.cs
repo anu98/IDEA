@@ -59,6 +59,10 @@ namespace AugmeNDT{
         {
             return dataVisGroup;
         }
+        public GameObject GetRootObject()
+        {
+            return polyModelContainer; // or polyModel, depending on what you want in the preview
+        }
 
         public async Task CreateObject(GameObject container, PolyFiberData dataset)
         {

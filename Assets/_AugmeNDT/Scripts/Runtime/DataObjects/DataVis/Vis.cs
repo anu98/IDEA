@@ -256,7 +256,9 @@ namespace AugmeNDT
             //SetChannelEncoding(VisChannel.YPos, new Attribute("Attribute Values", new[] { 0.0, 1.0 }));
             //SetChannelEncoding(VisChannel.ZPos, dataSets[0].GetAttribute(3));
             //SetChannelEncoding(VisChannel.Color, dataSets[0].GetAttribute(1));
-
+            //Glyphh layer
+            int glyphLayer = LayerMask.NameToLayer("Default"); // or "Glyphs" if you define it
+            SetLayerRecursively(visContainerObject, glyphLayer);
             if (attributeCount < axes) axes = attributeCount;
 
             return visContainerObject;
@@ -379,6 +381,12 @@ namespace AugmeNDT
                 case VisType.ChronoBins:
                     return new VisChronoBins();
             }
+        }
+        void SetLayerRecursively(GameObject obj, int layer)
+        {
+            obj.layer = layer;
+            foreach (Transform child in obj.transform)
+                SetLayerRecursively(child.gameObject, layer);
         }
 
     }

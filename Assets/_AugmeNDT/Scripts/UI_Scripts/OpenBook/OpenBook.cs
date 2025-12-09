@@ -16,9 +16,11 @@ namespace AugmeNDT
         [SerializeField] AudioClip openBook;
 
         [SerializeField] GameObject openedBook;
+        [SerializeField] GameObject ClosedBook;
+
         [SerializeField] GameObject insideBackCover;
         [SerializeField] GameObject BookSpine;
-        [SerializeField] GameObject ClosedBook;
+        [SerializeField] GameObject FrontofBook;
 
 
         private bool isCloseClicked;
@@ -55,10 +57,11 @@ namespace AugmeNDT
                     if ((endTime - startTime).TotalSeconds >= 1)
                     {
                         isOpenClicked = false;
-                        gameObject.SetActive(false);
+                        ClosedBook.SetActive(false);
+                        FrontofBook.SetActive(false);
                         insideBackCover.SetActive(false);
-                        openedBook.SetActive(true);
                         BookSpine.SetActive(false);
+                        openedBook.SetActive(true);
                     }
                 }
                 if (isCloseClicked && (endTime - startTime).TotalSeconds >= 1)
@@ -74,7 +77,8 @@ namespace AugmeNDT
         {
             isOpenClicked = true;
             rotationVector = new Vector3(0, 180, 0);
-            gameObject.SetActive(false);
+            ClosedBook.SetActive(false);
+            FrontofBook.SetActive(false);
             insideBackCover.SetActive(false);
             openedBook.SetActive(true);
             BookSpine.SetActive(false);
@@ -96,7 +100,7 @@ namespace AugmeNDT
             PlaySound();
             UserInterface.SetActive(true);
 
-            //ClosedBook.SetActive(true);         // Show the closed book temporarily
+            ClosedBook.SetActive(false);         // Show the closed book temporarily
             openedBook.SetActive(false);        // Hide the open book during animation
             //insideBackCover.SetActive(true);    // Show the inside back cover
             //BookSpine.SetActive(true);

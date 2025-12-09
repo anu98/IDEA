@@ -11,13 +11,13 @@ namespace AugmeNDT
     {
 
         public GameObject pagePrefab;
-       // public GameObject PreviewsOpenButton;
+        // public GameObject PreviewsOpenButton;
 
         // Prefab for the page layout
         public Transform contentPanel; // Panel where the pages will be instantiated
         public string folderPath;
         private List<GameObject> pages = new List<GameObject>(); // List to store the created pages
-      
+
 
         void Start()
         {
@@ -38,22 +38,22 @@ namespace AugmeNDT
 
             // Get all files in the folder
             string[] files = Directory.GetFiles(folderPath);
-            
+
 
 
             // Iterate through each file and create a page for it
             foreach (string filePath in files)
             {
-               
+
                 // Instantiate page prefab
                 GameObject page = Instantiate(pagePrefab, contentPanel);
                 string fileName = Path.GetFileName(filePath);
                 page.name = fileName;
                 Debug.Log("Instantiated page: " + page.name);
-              
+
                 pages.Add(page); // Add the page to the list
 
-                
+
 
                 if (page == null)
                 {
@@ -64,78 +64,109 @@ namespace AugmeNDT
                 PageData pageData = page.GetComponent<PageData>();
                 if (pageData != null)
                 {
-                    
-                    
 
-                   // Debug.LogError("PageData component found on instantiated page!");
-                   // Debug.Log($"[PagePopulator] Calling SetFilePath with: {filePath}");
+
+
+                    // Debug.LogError("PageData component found on instantiated page!");
+                    // Debug.Log($"[PagePopulator] Calling SetFilePath with: {filePath}");
 
                     pageData.SetFilePath(filePath);
-                    // This method exists in PageData
+                    // Try to load existing preview PNG
+                    string normalizedPath = filePath.Replace("\\", "/");
+                    string previewPath = PreviewPathHelper.GetPreviewPathForDataset(normalizedPath);
+                    Debug.Log($"[PagePopulator] Looking for preview at {previewPath}");
+
+                    if (File.Exists(previewPath))
+                    {
+                        Debug.Log($"[PagePopulator] Found preview PNG for {fileName}");
+
+                        byte[] bytes = File.ReadAllBytes(previewPath);
+                        Texture2D tex = new Texture2D(2, 2);
+                        tex.LoadImage(bytes);
+
+                        pageData.PreviewTexture = tex;
+
+                        var previewImage = page.transform
+                            .Find("Canvas/DynamicElements/PreviewImage")
+                            ?.GetComponent<UnityEngine.UI.RawImage>();
+
+                        if (previewImage != null)
+                        {
+                            Debug.Log($"[PagePopulator] Assigning preview texture on page {page.name}");
+                            previewImage.texture = tex;
+                        }
+                        else
+                        {
+                            Debug.LogError("PreviewImage RawImage not found under Canvas/DynamicElements on page: " + page.name);
+                        }
+                    }
+                    else
+                    {
+                        Debug.Log($"[PagePopulator] No preview PNG yet for {fileName}");
+                    }
                 }
-                else
-                {
-                    Debug.LogError("PageData component missing bro");
+                   
                 }
             }
-        }
+        
 
 
-      
-        public List<GameObject> GetPages()
+
+            public List<GameObject> GetPages()
             {
                 return pages;
             }
-       
 
 
-        public void GetFileInfoAtIndex(int index)
-        {
 
-            // Get all files in the folder
-            string[] files = Directory.GetFiles(folderPath);
-
-           // Debug.LogError("Getfileinfoatindex");
-            FileInfo fileInfo = new FileInfo(files[index]);
-            string fileName = Path.GetFileName(files[index]);
-            string fileType = Path.GetExtension(files[index]);
-            string lastModified = fileInfo.LastWriteTime.ToString();
-            string fileSize = fileInfo.Length.ToString();
-
-            GameObject page = pages[index];
-           
-            TextMeshProUGUI fileNameText = page.transform.Find("Canvas/DynamicElements/Name").GetComponent<TextMeshProUGUI>();
-            if (fileNameText == null)
+            public void GetFileInfoAtIndex(int index)
             {
-                Debug.LogError("Could not find UI text component on page: " + page.name);
-            }
-            TextMeshProUGUI fileTypeText = page.transform.Find("Canvas/DynamicElements/Type").GetComponent<TextMeshProUGUI>();
-            TextMeshProUGUI lastModifiedText = page.transform.Find("Canvas/DynamicElements/LastModified").GetComponent<TextMeshProUGUI>();
-            TextMeshProUGUI fileSizeText = page.transform.Find("Canvas/DynamicElements/Size").GetComponent<TextMeshProUGUI>();
-                    
-                    // Assign the retrieved values to the UI elements                    {
-                    
-            fileNameText.text = fileName; // Setting the fileName to the UI element
-    
-            fileTypeText.text = fileType; // Setting the fileType to the UI element
-                    
-            lastModifiedText.text = lastModified; // Setting the lastModified to the UI element
-                   
-            fileSizeText.text = fileSize; // Setting the fileSize to the UI element
-                    
 
-               
-               
-            
+                // Get all files in the folder
+                string[] files = Directory.GetFiles(folderPath);
+
+                // Debug.LogError("Getfileinfoatindex");
+                FileInfo fileInfo = new FileInfo(files[index]);
+                string fileName = Path.GetFileName(files[index]);
+                string fileType = Path.GetExtension(files[index]);
+                string lastModified = fileInfo.LastWriteTime.ToString();
+                string fileSize = fileInfo.Length.ToString();
+
+                GameObject page = pages[index];
+
+                TextMeshProUGUI fileNameText = page.transform.Find("Canvas/DynamicElements/Name").GetComponent<TextMeshProUGUI>();
+                if (fileNameText == null)
+                {
+                    Debug.LogError("Could not find UI text component on page: " + page.name);
+                }
+                TextMeshProUGUI fileTypeText = page.transform.Find("Canvas/DynamicElements/Type").GetComponent<TextMeshProUGUI>();
+                TextMeshProUGUI lastModifiedText = page.transform.Find("Canvas/DynamicElements/LastModified").GetComponent<TextMeshProUGUI>();
+                TextMeshProUGUI fileSizeText = page.transform.Find("Canvas/DynamicElements/Size").GetComponent<TextMeshProUGUI>();
+
+                // Assign the retrieved values to the UI elements                    {
+
+                fileNameText.text = fileName; // Setting the fileName to the UI element
+
+                fileTypeText.text = fileType; // Setting the fileType to the UI element
+
+                lastModifiedText.text = lastModified; // Setting the lastModified to the UI element
+
+                fileSizeText.text = fileSize; // Setting the fileSize to the UI element
+
+
+
+
+
+
+            }
+
+
+
+
 
         }
-       
-
-
-
-
     }
-}
+
 
 
 
