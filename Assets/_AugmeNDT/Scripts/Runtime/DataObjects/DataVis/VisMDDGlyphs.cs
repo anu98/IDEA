@@ -295,7 +295,9 @@ namespace AugmeNDT{
 
             //## 08: Set up individual Interctions
             SetUpVisTransitionInteractor(visContainerObject);
-
+            // NEW: ensure MDD glyph chart + all bars use Default layer
+            int defaultLayer = LayerMask.NameToLayer("Default");
+            SetLayerRecursively(visContainerObject, defaultLayer);
             return visContainerObject;
         }
 
@@ -520,6 +522,12 @@ namespace AugmeNDT{
             }
 
 
+        }
+        void SetLayerRecursively(GameObject obj, int layer)
+        {
+            obj.layer = layer;
+            foreach (Transform child in obj.transform)
+                SetLayerRecursively(child.gameObject, layer);
         }
 
         //Should be called once a selection boxed is dragged out
