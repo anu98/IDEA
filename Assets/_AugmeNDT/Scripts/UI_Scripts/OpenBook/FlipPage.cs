@@ -10,8 +10,9 @@ namespace AugmeNDT
 {
     public class FlipPage : MonoBehaviour
     {
-        private PagePopulator pagePopulator;
+     
 
+        public PagePopulator pagePopulator;
         public void SetPagePopulator(PagePopulator populator)
         {
             pagePopulator = populator;
@@ -35,7 +36,7 @@ namespace AugmeNDT
 
         public string folderpath;
 
-        private int currentPageIndex = -1;
+        public int currentPageIndex = -1;
         private List<GameObject> pages = new List<GameObject>();
 
         private Vector3 rotationVector;
@@ -215,6 +216,27 @@ namespace AugmeNDT
 
             }
         }
+        public void ResetBook()
+        {
+            currentPageIndex = 0;
+
+            // hide all pages
+            foreach (var p in pages)
+                p.SetActive(false);
+
+            // show index / first page
+            if (pages.Count > 0)
+                pages[0].SetActive(true);
+        }
+        void ShowFirstPage()
+        {
+            if (pagePopulator == null || pagePopulator.pages.Count == 0) return;
+
+            for (int i = 0; i < pagePopulator.pages.Count; i++)
+                pagePopulator.pages[i].SetActive(i == 0);
+
+            currentPageIndex = 0;
+        }
 
         //private void CloseBookBtn_Click()
         //{
@@ -225,6 +247,17 @@ namespace AugmeNDT
         {
             folderpath = path;
             Debug.Log($"Setfolderpath called in flippage {folderpath}");
+
+            currentPageIndex = 0;
+
+            // 1) Remove old book pages
+            if (pagePopulator != null)
+                pagePopulator.ClearPages();
+
+            // 2) Create pages for the new book
+            if (pagePopulator != null)
+                pagePopulator.PopulatePages(path);
+
         }
         public void TurnNextPage()
         {

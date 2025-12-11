@@ -17,12 +17,13 @@ namespace AugmeNDT
 
         [SerializeField] GameObject openedBook;
         [SerializeField] GameObject ClosedBook;
-
+        
         [SerializeField] GameObject insideBackCover;
         [SerializeField] GameObject BookSpine;
         [SerializeField] GameObject FrontofBook;
 
-
+        private Quaternion closedRotation;
+        public FlipPage flipPage;
         private bool isCloseClicked;
         private Vector3 rotationVector;
         private bool isOpenClicked;
@@ -32,6 +33,7 @@ namespace AugmeNDT
        
         void Start()
         {
+            closedRotation = transform.localRotation;
             if (openBtn != null)
             {
                 openBtn.onClick.AddListener(() => openBtn_Click());
@@ -75,36 +77,41 @@ namespace AugmeNDT
 
         public void openBtn_Click()
         {
-            isOpenClicked = true;
-            rotationVector = new Vector3(0, 180, 0);
+            transform.localRotation = closedRotation;
+            PlaySound();
+            // Hide closed visuals, show open
             ClosedBook.SetActive(false);
             FrontofBook.SetActive(false);
             insideBackCover.SetActive(false);
-            openedBook.SetActive(true);
             BookSpine.SetActive(false);
-            startTime = DateTime.Now;
-           
-            PlaySound();
+            openedBook.SetActive(true);
+         
 
         }
 
      
         public void closeBook_Click()
         {
-            print("close book clicked in open book");
-
-
-            isCloseClicked = true;
-            //startTime = DateTime.Now;
-            //rotationVector = new Vector3(0, -360, 0); // Rotate backward to close
+            Debug.Log("close book clicked in open book");
             PlaySound();
+
+            // Stop any close animation flag
+            isCloseClicked = false;
+
+            // Reset orientation so next open starts correctly
+            transform.localRotation = closedRotation;
+            if (flipPage != null)
+                flipPage.ResetBook();
+            openedBook.SetActive(false);
+            // Show shelf UI
             UserInterface.SetActive(true);
 
-            ClosedBook.SetActive(false);         // Show the closed book temporarily
-            openedBook.SetActive(false);        // Hide the open book during animation
-            //insideBackCover.SetActive(true);    // Show the inside back cover
+            // Show closed book, hide open parts
+            //ClosedBook.SetActive(true);
+            
+            //FrontofBook.SetActive(true);
+            //insideBackCover.SetActive(true);
             //BookSpine.SetActive(true);
-
         }
         private void PlaySound()
         {

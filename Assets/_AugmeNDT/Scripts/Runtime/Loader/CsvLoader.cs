@@ -144,7 +144,7 @@ namespace AugmeNDT
                     break;
                 default:
                     automaticDetectionSuccesful = false;
-                    Debug.LogError("CSV File has no valid meta information. Using abstract dataset as default");
+                    Debug.Log("CSV File has no valid meta information. Using abstract dataset as default");
                     break;
             }
         }

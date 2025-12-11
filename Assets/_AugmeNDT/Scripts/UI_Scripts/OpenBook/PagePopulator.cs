@@ -16,12 +16,18 @@ namespace AugmeNDT
         // Prefab for the page layout
         public Transform contentPanel; // Panel where the pages will be instantiated
         public string folderPath;
-        private List<GameObject> pages = new List<GameObject>(); // List to store the created pages
+        public List<GameObject> pages = new List<GameObject>(); // List to store the created pages
 
 
-        void Start()
+    
+        public void ClearPages()
         {
-            //PopulatePages(folderPath);
+            foreach (var p in pages)
+            {
+                if (p != null)
+                    Destroy(p);
+            }
+            pages.Clear();
         }
 
 

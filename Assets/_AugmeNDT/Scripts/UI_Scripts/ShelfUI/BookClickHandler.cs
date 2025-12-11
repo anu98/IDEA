@@ -60,8 +60,13 @@ public class BookClickHandler : MonoBehaviour
             {
                 Debug.Log("flipPage instance not found");
             }
-            flipPage.SetFolderPath(folderPath);
-            populateIndexPage.setFolderPath(folderPath);
+            if (flipPage != null)
+                flipPage.SetFolderPath(folderPath);       // always overwrite with THIS book
+
+            if (populateIndexPage != null)
+                populateIndexPage.setFolderPath(folderPath);
+            //flipPage.SetFolderPath(folderPath);
+            //populateIndexPage.setFolderPath(folderPath);
 
 
         }
