@@ -48,6 +48,7 @@ public class BookClickHandler : MonoBehaviour
 
             Debug.Log("Book was clicked! Path: " + folderPath);
             UserInterface.SetActive(false);
+            Book.SetActive(true);
             closedBook.SetActive(true);
             FrontofBook.SetActive(true);
             insideBackCover.SetActive(true);

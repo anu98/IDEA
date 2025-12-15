@@ -73,7 +73,7 @@ namespace AugmeNDT
                                    
         public Color[] colorScheme_default = { Color.cyan, Color.white, Color.magenta };
         // Warm theme
-        public Color[] colorScheme_warm = { Color.red, Color.yellow, Color.orange };
+        //public Color[] colorScheme_warm = { Color.red, Color.yellow, Color.orange };
 
         // Cool theme
         public Color[] colorScheme_cool = { Color.blue, Color.cyan, Color.white };

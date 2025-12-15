@@ -33,9 +33,7 @@ namespace AugmeNDT
             }
         }
 
-        /// <summary>
-        /// Call this if you are instantiating the button dynamically and want to inject AttributePopulator
-        /// </summary>
+       
         public void Init(AttributePopulator populator)
         {
             attributePopulator = populator;

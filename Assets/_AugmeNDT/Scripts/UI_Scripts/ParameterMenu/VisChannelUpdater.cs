@@ -11,7 +11,8 @@ public class VisChannelUpdater : MonoBehaviour
     public TMP_Dropdown yDropdown;
     public TMP_Dropdown zDropdown;
     public TMP_Dropdown colorDropdown;
- 
+    private SceneObjectHandler sceneObjectHandler;
+
 
     [Header("Target Visualization")]
     public DataVisGroup currentGroup; // drag the DataVisGroup from scene
