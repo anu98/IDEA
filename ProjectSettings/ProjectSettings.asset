@@ -70,7 +70,6 @@ PlayerSettings:
   androidStartInFullscreen: 1
   androidRenderOutsideSafeArea: 1
   androidUseSwappy: 1
-  androidDisplayOptions: 1
   androidBlitType: 0
   androidResizeableActivity: 0
   androidDefaultWindowWidth: 1920
@@ -134,7 +133,6 @@ PlayerSettings:
   switchNVNMaxPublicSamplerIDCount: 0
   switchMaxWorkerMultiple: 8
   switchNVNGraphicsFirmwareMemory: 32
-  switchGraphicsJobsSyncAfterKick: 1
   vulkanNumSwapchainBuffers: 3
   vulkanEnableSetSRGBWrite: 0
   vulkanEnablePreTransform: 0
@@ -935,27 +933,31 @@ PlayerSettings:
   webGLMemoryLinearGrowthStep: 16
   webGLMemoryGeometricGrowthStep: 0.2
   webGLMemoryGeometricGrowthCap: 96
+  webGLEnableWebGPU: 0
   webGLPowerPreference: 2
   webGLWebAssemblyTable: 0
   webGLWebAssemblyBigInt: 0
   webGLCloseOnQuit: 0
   webWasm2023: 0
-  webEnableSubmoduleStrippingCompatibility: 0
   scriptingDefineSymbols:
-    Android: USE_INPUT_SYSTEM_POSE_CONTROL;USE_STICK_CONTROL_THUMBSTICKS
-    EmbeddedLinux: MAGICLEAP
-    GameCoreXboxOne: MAGICLEAP
-    Nintendo Switch: MAGICLEAP
-    PS4: MAGICLEAP
-    PS5: MAGICLEAP
-    QNX: MAGICLEAP
+    Android: USE_INPUT_SYSTEM_POSE_CONTROL;USE_STICK_CONTROL_THUMBSTICKS;UNITY_POST_PROCESSING_STACK_V2
+    EmbeddedLinux: MAGICLEAP;UNITY_POST_PROCESSING_STACK_V2
+    GameCoreScarlett: UNITY_POST_PROCESSING_STACK_V2
+    GameCoreXboxOne: MAGICLEAP;UNITY_POST_PROCESSING_STACK_V2
+    Kepler: UNITY_POST_PROCESSING_STACK_V2
+    LinuxHeadlessSimulation: UNITY_POST_PROCESSING_STACK_V2
+    Nintendo Switch: MAGICLEAP;UNITY_POST_PROCESSING_STACK_V2
+    Nintendo Switch 2: UNITY_POST_PROCESSING_STACK_V2
+    PS4: MAGICLEAP;UNITY_POST_PROCESSING_STACK_V2
+    PS5: MAGICLEAP;UNITY_POST_PROCESSING_STACK_V2
+    QNX: MAGICLEAP;UNITY_POST_PROCESSING_STACK_V2
     ReservedCFE: MAGICLEAP
-    Standalone: USE_INPUT_SYSTEM_POSE_CONTROL;USE_STICK_CONTROL_THUMBSTICKS;MAGICLEAP
-    VisionOS: MAGICLEAP
-    WebGL: MAGICLEAP
+    Standalone: USE_INPUT_SYSTEM_POSE_CONTROL;USE_STICK_CONTROL_THUMBSTICKS;MAGICLEAP;UNITY_POST_PROCESSING_STACK_V2
+    VisionOS: MAGICLEAP;UNITY_POST_PROCESSING_STACK_V2
+    WebGL: MAGICLEAP;UNITY_POST_PROCESSING_STACK_V2
     Windows Store Apps: release;DOTNETWINRT_PRESENT;USE_INPUT_SYSTEM_POSE_CONTROL;MAGIC_LEAP_2;USE_STICK_CONTROL_THUMBSTICKS
-    XboxOne: MAGICLEAP
-    tvOS: MAGICLEAP
+    XboxOne: MAGICLEAP;UNITY_POST_PROCESSING_STACK_V2
+    tvOS: MAGICLEAP;UNITY_POST_PROCESSING_STACK_V2
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
@@ -1095,5 +1097,3 @@ PlayerSettings:
   insecureHttpOption: 0
   androidVulkanDenyFilterList: []
   androidVulkanAllowFilterList: []
-  androidVulkanDeviceFilterListAsset: {fileID: 0}
-  d3d12DeviceFilterListAsset: {fileID: 0}

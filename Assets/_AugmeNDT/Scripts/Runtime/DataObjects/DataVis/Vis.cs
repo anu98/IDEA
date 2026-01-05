@@ -250,6 +250,19 @@ namespace AugmeNDT
             
             visContainerObject.transform.SetParent(container.transform);
             visContainer.SetHandleText(dataSets[0].datasetName);
+            // Scale the whole DataVisGroup (graphs + fibers)
+            //if (dataVisGroup != null)
+            //{
+            //    var groupRoot = dataVisGroup.GetGroupContainer();
+            //    if (groupRoot != null)
+            //    {
+            //        float groupScale = 2f;   // 1.5× bigger
+            //        groupRoot.transform.localScale *= groupScale;
+            //    }
+            //}
+            // Simple global scale for all charts
+            //float graphScale = 4.0f;  // 2× bigger; tweak as needed
+            //visContainerObject.transform.localScale *= graphScale;
 
             //Set default channel encodings
             //SetChannelEncoding(VisChannel.XPos, dataSets[0].GetHeader());

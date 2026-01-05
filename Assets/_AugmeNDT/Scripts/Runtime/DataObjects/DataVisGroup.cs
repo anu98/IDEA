@@ -296,6 +296,7 @@ namespace AugmeNDT
           
 
             vis.CreateVis(dataVisGroupContainer);
+            
         }
 
         /// <summary>
@@ -307,6 +308,9 @@ namespace AugmeNDT
             if (hasVolumeDataset) RenderVolumeObject();
             if (hasPolygonalDataset) RenderPolyObject();
             if (hasAbstractDataset) RenderAbstractVisObject(visType);
+            // Global scale for this entire group (runtime equivalent of what you did in Inspector)
+            float groupScale = 2f;   // tweak as needed
+            dataVisGroupContainer.transform.localScale *= groupScale;
         }
         public void RenderFibersforPreview(VisType visType)
         {

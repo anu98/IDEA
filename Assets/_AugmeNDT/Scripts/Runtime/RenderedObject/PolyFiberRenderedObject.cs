@@ -87,7 +87,7 @@ namespace AugmeNDT{
 
                 //Resize to whole size of all meshes
                 Bounds wholeFiberObjBounds = GlobalScaleAndPos.GetBoundsOfParentAndChildren(polyModel);
-                
+
                 BoxCollider boxColl = polyModelContainer.GetComponent<BoxCollider>() != null ? polyModelContainer.GetComponent<BoxCollider>() : polyModelContainer.AddComponent<BoxCollider>();
 
                 // Fibers are drawn in different coordinate system and need to be reduced to be in meters

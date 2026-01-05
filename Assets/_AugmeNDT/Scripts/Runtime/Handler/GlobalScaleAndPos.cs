@@ -20,7 +20,8 @@ namespace AugmeNDT{
         /// <param name="gameObjecTransform"></param>
         public static void SetToBestInitialStartPos(Transform gameObjecTransform)
         {
-            gameObjecTransform.position = new Vector3(0, 1f, 0.7f);
+            gameObjecTransform.position = new Vector3(1f, 1f, 4f);
+            //gameObjecTransform.localScale = new Vector3(3f,3f,3f);
         }
 
         /// <summary>

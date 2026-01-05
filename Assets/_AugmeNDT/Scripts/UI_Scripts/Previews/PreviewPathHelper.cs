@@ -5,8 +5,8 @@ public static class PreviewPathHelper
 {
     public static string GetPreviewPathForDataset(string datasetPath)
     {
-        int hash = datasetPath.GetHashCode();
-        string safeName = hash.ToString("X8");
-        return Path.Combine(Application.persistentDataPath, "preview_" + safeName + ".png");
+        string key = datasetPath.Replace("\\", "/");
+        int hash = key.GetHashCode();  // Editor-only hash
+        return "preview_" + hash.ToString("X8") + ".png";
     }
 }
