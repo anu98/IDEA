@@ -91,6 +91,7 @@ namespace AugmeNDT{
 
         public void DeleteVisContainer()
         {
+            if (anchoredContainer == null) return;//anu
             foreach (Transform child in anchoredContainer.transform)
             {
                 GameObject.Destroy(child.gameObject);
