@@ -268,43 +268,30 @@ namespace AugmeNDT
                     continue;
 
                 pageData.SetFilePath(filePath);
+               
                 string normalizedPath = filePath.Replace("\\", "/");
-
 #if UNITY_ANDROID && !UNITY_EDITOR
-                // ANDROID / MAGIC LEAP: load pre-baked PNG from StreamingAssets/Previews
-                string previewFileName = PreviewPathHelper.GetPreviewPathForDataset(normalizedPath);
-                string url = Path.Combine(Application.streamingAssetsPath, "Previews/" + previewFileName);
-                Debug.Log($"[PagePopulator][ANDROID] Loading preview from {url}");
+string datasetName = Path.GetFileNameWithoutExtension(normalizedPath); 
+Texture2D tex = Resources.Load<Texture2D>($"Previews/{datasetName}");
 
-                // Use synchronous request (ok for small thumbnails)
-                UnityWebRequest req = UnityWebRequestTexture.GetTexture(url);
-                req.SendWebRequest();
-                while (!req.isDone) { }  // or handle asynchronously elsewhere
+if (tex != null)
+{
+    pageData.PreviewTexture = tex;
+    var previewImage = page.transform
+        .Find("Canvas/DynamicElements/PreviewImage")
+        ?.GetComponent<UnityEngine.UI.RawImage>();
 
-                if (req.result == UnityWebRequest.Result.Success)
-                {
-                    Texture2D tex = DownloadHandlerTexture.GetContent(req);
-                    pageData.PreviewTexture = tex;
-
-                    var previewImage = page.transform
-                        .Find("Canvas/DynamicElements/PreviewImage")
-                        ?.GetComponent<UnityEngine.UI.RawImage>();
-
-                    if (previewImage != null)
-                    {
-                        Debug.Log($"[PagePopulator][ANDROID] Assigning preview texture on page {page.name}");
-                        previewImage.texture = tex;
-                    }
-                    else
-                    {
-                        Debug.LogError("[PagePopulator][ANDROID] PreviewImage RawImage not found on page: " + page.name);
-                    }
-                }
-                else
-                {
-                    Debug.LogWarning($"[PagePopulator][ANDROID] Could not load preview for {fileName}: {req.error}");
-                }
+    if (previewImage != null)
+        previewImage.texture = tex;
+    else
+        Debug.LogError("PreviewImage RawImage not found on page: " + page.name);
+}
+else
+{
+    Debug.LogWarning($"Could not load preview for dataset: {datasetName}");
+}
 #else
+
                 // EDITOR / OTHER PLATFORMS: keep existing persistentDataPath logic
                 string previewPath = PreviewPathHelper.GetPreviewPathForDataset(normalizedPath);
                 Debug.Log($"[PagePopulator] Looking for preview at {previewPath}");
@@ -338,7 +325,11 @@ namespace AugmeNDT
                     Debug.Log($"[PagePopulator] No preview PNG yet for {fileName}");
                 }
 #endif
+
             }
+
+
+
         }
 
         public List<GameObject> GetPages()
@@ -370,3 +361,5 @@ namespace AugmeNDT
         }
     }
 }
+
+

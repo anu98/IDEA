@@ -6,6 +6,7 @@ namespace AugmeNDT
 {
     public class PageData : MonoBehaviour
     {
+        public int DatasetID;
         string PageFilePath;
         [SerializeField] private Transform previewAnchor;
         public DataVisGroup CachedGroup { get; set; }
