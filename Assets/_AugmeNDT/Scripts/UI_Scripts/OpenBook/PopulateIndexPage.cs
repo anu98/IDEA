@@ -27,7 +27,7 @@ namespace AugmeNDT
         {
             folderPath = path;
         }
-        void PopulatePage(string folderPath)
+        public void PopulatePage(string folderPath)
         {
             // Check if the folder exists
             if (!Directory.Exists(folderPath))
@@ -38,6 +38,8 @@ namespace AugmeNDT
 
             // Get all files in the folder
             string[] files = Directory.GetFiles(folderPath);
+            // Sort alphabetically by file name
+            System.Array.Sort(files, (a, b) => string.Compare(Path.GetFileName(a), Path.GetFileName(b)));
             float yPos = 540f;
             // Iterate through each file
             foreach (string filePath in files)
@@ -49,7 +51,7 @@ namespace AugmeNDT
                 // Instantiate dataset UI element from prefab
                 GameObject datasetObject = Instantiate(datasetPrefab, contentPanel);
 
-                datasetPrefab.SetActive(true);
+                datasetObject.SetActive(true);
 
                 // Access UI elements of the instantiated datasetObject
                 TextMeshProUGUI nameLabel = datasetObject.transform.Find("Title").GetComponent<TextMeshProUGUI>();

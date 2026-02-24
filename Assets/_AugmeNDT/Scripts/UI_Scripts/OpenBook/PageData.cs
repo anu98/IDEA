@@ -49,6 +49,7 @@ namespace AugmeNDT
             }
             return PageFilePath;
         }
+
         public Transform GetPreviewAnchor()
         {
             return previewAnchor != null ? previewAnchor : transform;

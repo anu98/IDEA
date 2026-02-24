@@ -224,7 +224,7 @@ namespace AugmeNDT
         public Transform contentPanel;
         public string folderPath;
         public List<GameObject> pages = new List<GameObject>();
-
+        private string[] sortedFiles;
         public void ClearPages()
         {
             foreach (var p in pages)
@@ -232,11 +232,13 @@ namespace AugmeNDT
                 if (p != null)
                     Destroy(p);
             }
+
             pages.Clear();
         }
 
         public void PopulatePages(string folderPath)
         {
+            ClearPages();
             this.folderPath = folderPath;
 
             if (!Directory.Exists(folderPath))
@@ -247,7 +249,8 @@ namespace AugmeNDT
             Debug.Log($"[PagePopulator] PopulatePages() called with folderPath: {folderPath}");
 
             string[] files = Directory.GetFiles(folderPath);
-
+            // Sort alphabetically by file name
+System.Array.Sort(files, (a, b) => string.Compare(Path.GetFileName(a), Path.GetFileName(b)));
             foreach (string filePath in files)
             {
                 GameObject page = Instantiate(pagePrefab, contentPanel);
@@ -340,6 +343,7 @@ else
         public void GetFileInfoAtIndex(int index)
         {
             string[] files = Directory.GetFiles(folderPath);
+            System.Array.Sort(files, (a, b) => string.Compare(Path.GetFileName(a), Path.GetFileName(b)));
 
             FileInfo fileInfo = new FileInfo(files[index]);
             string fileName = Path.GetFileName(files[index]);

@@ -396,6 +396,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -18.8
       objectReference: {fileID: 0}
+    - target: {fileID: 123878969482964437, guid: 01abd2c84cddb8a409b01ab13cdd4424, type: 3}
+      propertyPath: m_text
+      value: Index Page
+      objectReference: {fileID: 0}
     - target: {fileID: 389642469364482992, guid: 01abd2c84cddb8a409b01ab13cdd4424, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -427,6 +431,34 @@ PrefabInstance:
     - target: {fileID: 891566179972735607, guid: 01abd2c84cddb8a409b01ab13cdd4424, type: 3}
       propertyPath: m_Name
       value: openButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 1032210585496101199, guid: 01abd2c84cddb8a409b01ab13cdd4424, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1032210585496101199, guid: 01abd2c84cddb8a409b01ab13cdd4424, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1032210585496101199, guid: 01abd2c84cddb8a409b01ab13cdd4424, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 93520095}
+    - target: {fileID: 1032210585496101199, guid: 01abd2c84cddb8a409b01ab13cdd4424, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1032210585496101199, guid: 01abd2c84cddb8a409b01ab13cdd4424, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: TurnPreviousPage
+      objectReference: {fileID: 0}
+    - target: {fileID: 1032210585496101199, guid: 01abd2c84cddb8a409b01ab13cdd4424, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: AugmeNDT.FlipPage, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1032210585496101199, guid: 01abd2c84cddb8a409b01ab13cdd4424, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 1434720439903570934, guid: 01abd2c84cddb8a409b01ab13cdd4424, type: 3}
       propertyPath: m_IsActive
@@ -540,6 +572,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 6f21f3aa3fb1bc1439c9d19857f80fe4, type: 2}
+    - target: {fileID: 4327525058709524458, guid: 01abd2c84cddb8a409b01ab13cdd4424, type: 3}
+      propertyPath: m_Name
+      value: indexPage
+      objectReference: {fileID: 0}
     - target: {fileID: 4428815189376398911, guid: 01abd2c84cddb8a409b01ab13cdd4424, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -551,6 +587,10 @@ PrefabInstance:
     - target: {fileID: 4458157492265499627, guid: 01abd2c84cddb8a409b01ab13cdd4424, type: 3}
       propertyPath: m_Material
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4984110894523288705, guid: 01abd2c84cddb8a409b01ab13cdd4424, type: 3}
+      propertyPath: m_Name
+      value: indexpageheadertext
       objectReference: {fileID: 0}
     - target: {fileID: 5404968668564075401, guid: 01abd2c84cddb8a409b01ab13cdd4424, type: 3}
       propertyPath: m_IsActive
@@ -641,9 +681,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1172062714}
     - target: {fileID: 6332462449991426685, guid: 01abd2c84cddb8a409b01ab13cdd4424, type: 3}
+      propertyPath: ForwardButton
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6332462449991426685, guid: 01abd2c84cddb8a409b01ab13cdd4424, type: 3}
+      propertyPath: pagePopulator
+      value: 
+      objectReference: {fileID: 93520099}
+    - target: {fileID: 6332462449991426685, guid: 01abd2c84cddb8a409b01ab13cdd4424, type: 3}
       propertyPath: ForwardButton1
       value: 
       objectReference: {fileID: 951402457}
+    - target: {fileID: 6332462449991426685, guid: 01abd2c84cddb8a409b01ab13cdd4424, type: 3}
+      propertyPath: populateIndexPage
+      value: 
+      objectReference: {fileID: 93520094}
     - target: {fileID: 6371130489787072810, guid: 01abd2c84cddb8a409b01ab13cdd4424, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -756,6 +808,10 @@ PrefabInstance:
       propertyPath: ParameterSelectionMenu
       value: 
       objectReference: {fileID: 811781758}
+    - target: {fileID: 7832625663615099197, guid: 01abd2c84cddb8a409b01ab13cdd4424, type: 3}
+      propertyPath: m_Name
+      value: entriestext
+      objectReference: {fileID: 0}
     - target: {fileID: 8297499379004475197, guid: 01abd2c84cddb8a409b01ab13cdd4424, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -799,6 +855,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 3665719385908588167, guid: 01abd2c84cddb8a409b01ab13cdd4424, type: 3}
+    - {fileID: 5922756662154368871, guid: 01abd2c84cddb8a409b01ab13cdd4424, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 5465782730891540003, guid: 01abd2c84cddb8a409b01ab13cdd4424, type: 3}
       insertIndex: -1
@@ -887,6 +944,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1053290800340303502, guid: 01abd2c84cddb8a409b01ab13cdd4424, type: 3}
   m_PrefabInstance: {fileID: 93520092}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &93520099 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2769779948080580789, guid: 01abd2c84cddb8a409b01ab13cdd4424, type: 3}
+  m_PrefabInstance: {fileID: 93520092}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 93520093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d2f53d63f2122a4cb70d6777b1a3d48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &115042242 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8798822188596485386, guid: 9e04d68f5882f44429c716e6ebdcbccd, type: 3}
@@ -4859,7 +4927,7 @@ GameObject:
   - component: {fileID: 951402458}
   - component: {fileID: 951402457}
   m_Layer: 0
-  m_Name: ClosedButton (1)
+  m_Name: ForwardButton (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

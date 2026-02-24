@@ -53,21 +53,24 @@ public class BookClickHandler : MonoBehaviour
             FrontofBook.SetActive(true);
             insideBackCover.SetActive(true);
             BookSpine.SetActive(true);
-                
-            // Add logic to handle the book click event, such as opening the book or loading content
-           
-           // pagePopulator.PopulatePages(folderPath);
-           if(flipPage == null)
-            {
-                Debug.Log("flipPage instance not found");
-            }
-            if (flipPage != null)
-                flipPage.SetFolderPath(folderPath);       // always overwrite with THIS book
 
-            if (populateIndexPage != null)
-                populateIndexPage.setFolderPath(folderPath);
-            //flipPage.SetFolderPath(folderPath);
-            //populateIndexPage.setFolderPath(folderPath);
+            // Add logic to handle the book click event, such as opening the book or loading content
+
+            // Open book pages
+            if (flipPage != null)
+                flipPage.SetFolderPath(folderPath);
+                
+            else
+                Debug.LogWarning("flipPage reference not assigned!");
+
+            //// Update index page safely
+            //if (populateIndexPage != null)
+            //{
+            //    populateIndexPage.setFolderPath(folderPath);   // Update folder path
+            //    populateIndexPage.PopulatePage(folderPath);    // Populate index page UI
+            //}
+            //else
+            //    Debug.LogWarning("populateIndexPage reference not assigned!");
 
 
         }

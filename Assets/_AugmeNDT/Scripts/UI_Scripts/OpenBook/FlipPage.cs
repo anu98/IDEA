@@ -24,6 +24,8 @@ namespace AugmeNDT
             forwardBtn,
             prevBtn
         }
+    
+        [SerializeField] PopulateIndexPage populateIndexPage;
         [SerializeField] Button ForwardButton;
         [SerializeField] Button ForwardButton1;
         [SerializeField] Button PrevButton;
@@ -62,23 +64,25 @@ namespace AugmeNDT
                 Debug.LogError("Folder path is not set!");
                 return;
             }
-            pagePopulator.PopulatePages(folderpath);
+            //pagePopulator.PopulatePages(folderpath);
             pages = pagePopulator.GetPages();
-            //if (pages.Count == 0)
-            //{
-            //    Debug.LogError("No pages found!");
-            //    return;
-            //}
+            if (pages.Count == 0)
+            {
+                Debug.LogError("No pages found!");
+                return;
+            }
 
             startRotation = transform.rotation;
             startPosition = transform.position;
 
             if (ForwardButton != null)
             {
+                ForwardButton.onClick.RemoveAllListeners();
                 ForwardButton.onClick.AddListener(() => TurnOnePage_Click(ButtonType.forwardBtn));
             }
             if (ForwardButton1 != null)
             {
+                ForwardButton.onClick.RemoveAllListeners();
                 ForwardButton1.onClick.AddListener(() => TurnOnePage_Click(ButtonType.forwardBtn));
             }
             else
@@ -87,7 +91,12 @@ namespace AugmeNDT
             }
             if (PrevButton != null)
             {
+                ForwardButton.onClick.RemoveAllListeners();
                 PrevButton.onClick.AddListener(() => TurnOnePage_Click(ButtonType.prevBtn));
+            }
+            else
+            {
+                Debug.Log("previous button null");
             }
 
             //if (CloseButton != null)
@@ -162,11 +171,11 @@ namespace AugmeNDT
             {
                 page.SetActive(false);
             }
+            // Hide index page by default
+            if (indexPage != null)
+                indexPage.SetActive(false);
 
-            // Hide the index page
-            indexPage.SetActive(false);
-
-
+            // Show index page if no page is selected
             if (currentPageIndex == -1)
             {
                 indexPage.SetActive(true);
@@ -185,26 +194,13 @@ namespace AugmeNDT
                 {
                     Debug.Log("null");
                 }
-                // Ensure ForwardButton1 is assigned the correct listener and is visible
-                //Button forwardButton1 = pages[currentPageIndex].transform.Find("Canvas/DynamicElements/ForwardButton1")?.GetComponent<Button>();
-                //if (forwardButton1 != null)
-                //{
-                //    forwardButton1.onClick.RemoveAllListeners(); // Clear existing listeners to avoid duplication
-                //    forwardButton1.onClick.AddListener(() => turnOnePage_Click(ButtonType.forwardBtn));
 
-                //    // Bring ForwardButton1 to the front
-                //    forwardButton1.transform.SetAsLastSibling();
+                int datasetIndex = currentPageIndex;
 
-                //    // Add debug log to verify the button is being found
-                //    Debug.Log("ForwardButton1 found and listener assigned.");
-                //}
-                //else
-                //{
-                //    Debug.LogWarning("ForwardButton1 not found on current page.");
-                //}
+                if (datasetIndex >= 0)
+                    pagePopulator.GetFileInfoAtIndex(datasetIndex);
 
-
-                pagePopulator.GetFileInfoAtIndex(currentPageIndex);
+                //pagePopulator.GetFileInfoAtIndex(currentPageIndex);
 
             }
         }
@@ -216,17 +212,33 @@ namespace AugmeNDT
 
             }
         }
-        public void ResetBook()
+       
+            public void ResetBook()
+            {
+                currentPageIndex = -1;
+                ShowCurrentPage();
+            if (pages[currentPageIndex] == null)
+            {
+                Debug.LogWarning("Current page not ready yet");
+                return;
+            }
+        }
+        
+        public void RefreshPages()
         {
-            currentPageIndex = 0;
-
-            // hide all pages
             foreach (var p in pages)
-                p.SetActive(false);
-
-            // show index / first page
-            if (pages.Count > 0)
-                pages[0].SetActive(true);
+            {
+                Debug.Log(p.name + " active=" + p.activeSelf);
+            }
+            if (pagePopulator != null)
+            {
+                pages = pagePopulator.GetPages();
+                Debug.Log($"Pages refreshed. Count = {pages.Count}");
+            }
+            else
+            {
+                Debug.LogWarning("PagePopulator is null in RefreshPages()");
+            }
         }
         void ShowFirstPage()
         {
@@ -246,18 +258,48 @@ namespace AugmeNDT
         public void SetFolderPath(string path)
         {
             folderpath = path;
-            Debug.Log($"Setfolderpath called in flippage {folderpath}");
+            Debug.Log($"SetFolderPath called in FlipPage: {folderpath}");
 
-            currentPageIndex = 0;
+            // 1) Reset current page index
+            currentPageIndex = -1;
 
-            // 1) Remove old book pages
+            // 2) Clear old book pages
             if (pagePopulator != null)
                 pagePopulator.ClearPages();
 
-            // 2) Create pages for the new book
-            if (pagePopulator != null)
-                pagePopulator.PopulatePages(path);
+            // 3) Clear old index page content 
+            if (populateIndexPage != null && populateIndexPage.contentPanel != null)
+            {
+                // Destroy all old dataset entries
+                //foreach (Transform child in populateIndexPage.contentPanel)
+                //    Destroy(child.gameObject);
+                if (populateIndexPage != null && populateIndexPage.contentPanel != null)
+                {
+                    foreach (Transform child in populateIndexPage.contentPanel)
+                    {
+                        if (child != null && child.name.StartsWith("entriestext"))
+                            child.gameObject.SetActive(false); // disable instead of destroy
+                    }
+                }
 
+                // Set new folder path and repopulate index page
+                populateIndexPage.setFolderPath(folderpath);
+                populateIndexPage.PopulatePage(folderpath); // make PopulatePage public
+            }
+            else
+            {
+                Debug.LogWarning("populateIndexPage or its contentPanel is null!");
+            }
+
+            // 4) Populate new book pages
+            if (pagePopulator != null)
+                pagePopulator.PopulatePages(folderpath);
+
+            // 5) Refresh runtime page list
+            RefreshPages();
+
+            // 6) Show index page
+            ShowCurrentPage();
         }
         public void TurnNextPage()
         {
