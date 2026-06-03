@@ -19,7 +19,8 @@ namespace AugmeNDT
 #if UNITY_EDITOR
         public string editorFolderPath = "D:/downloads/Main"; // Editor path
 #else
-        public string androidFolderPath => Path.Combine(Application.persistentDataPath, "Datasets"); // Android path
+        public string androidFolderPath =>
+    "/storage/emulated/0/Main"; // Android path
 #endif
 
         void Start()

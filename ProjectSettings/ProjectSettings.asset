@@ -12,8 +12,8 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: AlexanderGall
-  productName: AugmeNDTwithUI
+  companyName: AnushrutiGupta
+  productName: IDEA
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -327,9 +327,9 @@ PlayerSettings:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 11400000, guid: a4d48fb8885c8bd4e9dd5c57fba1824e, type: 2}
   - {fileID: 11400000, guid: 61f5faf81f748e940a74c44a44b110c4, type: 2}
   - {fileID: -8095986922307676345, guid: aa0fe1b4e58162c4a8bfedb3bd359bfe, type: 2}
+  - {fileID: 11400000, guid: a4d48fb8885c8bd4e9dd5c57fba1824e, type: 2}
   - {fileID: 9034294109648631136, guid: 73aaf978c646f384c82bd3b9671795ec, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -352,7 +352,7 @@ PlayerSettings:
   androidMaxAspectRatio: 2.1
   androidMinAspectRatio: 1
   applicationIdentifier:
-    Android: com.AlexanderGall.AugmeNDTwithUI
+    Android: com.AnushrutiGupta.IDEA
     Standalone: com.DefaultCompany.AugmeNDT
   buildNumber:
     Standalone: 0
@@ -369,7 +369,7 @@ PlayerSettings:
   iPhoneStrippingLevel: 0
   iPhoneScriptCallOptimization: 0
   ForceInternetPermission: 0
-  ForceSDCardPermission: 0
+  ForceSDCardPermission: 1
   CreateWallpaper: 0
   androidSplitApplicationBinary: 0
   keepLoadedShadersAlive: 0
@@ -451,7 +451,7 @@ PlayerSettings:
   useCustomGradlePropertiesTemplate: 0
   useCustomGradleSettingsTemplate: 0
   useCustomProguardFile: 0
-  AndroidTargetArchitectures: 8
+  AndroidTargetArchitectures: 0
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
   AndroidKeystoreName: 

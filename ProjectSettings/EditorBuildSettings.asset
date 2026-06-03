@@ -9,6 +9,7 @@ EditorBuildSettings:
     path: Assets/_AugmeNDT/Scenes/AugmeNDTMainScene.unity
     guid: 117a1a81cb901994c948e4731177242d
   m_configObjects:
+    UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 843476a67b0ad0a45b790fdeccf02196, type: 2}
     com.unity.addressableassets: {fileID: 11400000, guid: 97256c6c62a3ef94899260fd60cee73f, type: 2}
     com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: 61f5faf81f748e940a74c44a44b110c4, type: 2}
     com.unity.xr.magicleap.magic_leap_settings: {fileID: 11400000, guid: b711011e8ed1b1d4caad3b5c2141f0f0, type: 2}

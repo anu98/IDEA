@@ -276,7 +276,7 @@ System.Array.Sort(files, (a, b) => string.Compare(Path.GetFileName(a), Path.GetF
 #if UNITY_ANDROID && !UNITY_EDITOR
 string datasetName = Path.GetFileNameWithoutExtension(normalizedPath); 
 Texture2D tex = Resources.Load<Texture2D>($"Previews/{datasetName}");
-
+Debug.LogError("trying to load previews");
 if (tex != null)
 {
     pageData.PreviewTexture = tex;

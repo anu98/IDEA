@@ -35,7 +35,12 @@ namespace AugmeNDT
                 Debug.LogError("Folder does not exist: " + folderPath);
                 return;
             }
-
+            // Clear existing clones first
+            foreach (Transform child in contentPanel)
+            {
+                if (child.name.Contains("Clone"))
+                    Destroy(child.gameObject);
+            }
             // Get all files in the folder
             string[] files = Directory.GetFiles(folderPath);
             // Sort alphabetically by file name
