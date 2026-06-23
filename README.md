@@ -12,6 +12,18 @@ Developed as part of my Master's thesis, the project introduces an intuitive spa
 
 The project focuses on improving usability and user experience for immersive data exploration while leveraging existing visualization techniques in an AR environment.
 
+Important note : This repository builds upon the original AugmeNDT framework developed by Alexander Gall and collaborators.
+
+This version was used and extended as part of a Master's thesis project focusing on immersive UI/UX design and interaction paradigms for AR-based data exploration.
+
+Modifications primarily focus on:
+- AR user interface and interaction design
+- Dataset browsing and navigation workflows
+- Integration and presentation of visualization modules in immersive environments
+- UX improvements for spatial data exploration
+
+Original system architecture and core visualization methods are attributed to the original authors (see citation section below).
+
 ---
 
 ## Key Features
